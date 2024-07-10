@@ -1,7 +1,7 @@
 import { View, Text, Image, Keyboard, Alert } from 'react-native';
 import { DateData } from 'react-native-calendars';
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import {
   MapPin,
@@ -22,6 +22,7 @@ import { GuestEmail } from '@/components/email';
 import { validateInput } from '@/utils/validateInput';
 import { tripStorage } from '@/storage/trip';
 import { tripServer } from '@/server/trip-server';
+import { Loading } from '@/components/loading';
 
 enum StepFormEnum {
   TRIP_DETAILS = 1,
@@ -155,32 +156,32 @@ export default function Index() {
     }
   }
 
-  // async function getTrip() {
-  //   try {
-  //     const tripID = await tripStorage.get();
+  async function getTrip() {
+    try {
+      const tripID = await tripStorage.get();
 
-  //     if (!tripID) {
-  //       return setIsGettingTrip(false);
-  //     }
+      if (!tripID) {
+        return setIsGettingTrip(false);
+      }
 
-  //     const trip = await tripServer.getById(tripID);
+      const trip = await tripServer.getById(tripID);
 
-  //     if (trip) {
-  //       return router.navigate('/trip/' + trip.id);
-  //     }
-  //   } catch (error) {
-  //     setIsGettingTrip(false);
-  //     console.log(error);
-  //   }
-  // }
+      if (trip) {
+        return router.navigate('/trip/' + trip.id);
+      }
+    } catch (error) {
+      setIsGettingTrip(false);
+      console.log(error);
+    }
+  }
 
-  // useEffect(() => {
-  //   getTrip();
-  // }, []);
+  useEffect(() => {
+    getTrip();
+  }, []);
 
-  // if (isGettingTrip) {
-  //   return <Loading />;
-  // }
+  if (isGettingTrip) {
+    return <Loading />;
+  }
 
   return (
     <View className='flex-1 justify-center items-center px-5'>
