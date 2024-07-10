@@ -1,8 +1,8 @@
 import '@/styles/global.css';
+import { Loading } from '@/components/loading';
 
 import { Slot } from 'expo-router';
 import { View, StatusBar } from 'react-native';
-
 import {
   useFonts,
   Inter_500Medium,
@@ -18,7 +18,7 @@ export default function Layout() {
   });
 
   if (!fontIsLoaded) {
-    return;
+    return <Loading />;
   }
 
   return (
