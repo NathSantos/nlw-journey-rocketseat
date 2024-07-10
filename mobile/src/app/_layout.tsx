@@ -1,4 +1,5 @@
 import '@/styles/global.css';
+import '@/utils/dayjsLocaleConfig';
 import { Loading } from '@/components/loading';
 
 import { Slot } from 'expo-router';
